@@ -1,0 +1,4 @@
+neo4j>=5.20.0
+pandas>=1.4.4
+numpy>=1.21.6
+matplotlib>=3.5.2
