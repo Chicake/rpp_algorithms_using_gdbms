@@ -16,10 +16,16 @@ This repository aims to provide the full coding implementation of the RPP Algori
 3. **requirements.txt**: This file contains all library used in main.py, so you can pip install.
 
 ## Road Network Graph Database (You need to create this)
-When creating your own road network graph database, the labelling and property name should exactly be the same, or otherwise the Cypher query will fail. Specifically, name things as below (see the image too for an example):
+When creating your own road network graph database, the labelling and property name should exactly be the same, or otherwise the Cypher query will fail. You can see the paper Specifically, name nodes and edges as below (see the image too for an example), with sub bullet points representing their properties:
 - Edge name (road): DRIVE_TO
-- Property names of the nodes (junctions)
-  - ID of the junction: ID
+  - id: ID of the edge
+  - direction: label "B" for both ways, "O" for one way
+  - distance: in nautical miles
+- Node name (junctions): Junction
+  - id: ID of the node
+  - latitude
+  - longitude
+<img width="1344" height="430" alt="Picture 1 (1)" src="https://github.com/user-attachments/assets/8ae51abf-71aa-48de-ad95-974879a6b2a4" />
 
 ## Setup Instructions
 1. **Python Environment**: Ensure Python is installed. Required libraries include pandas, numpy, matplotlib, and neo4j. Install them using:
@@ -30,14 +36,11 @@ When creating your own road network graph database, the labelling and property n
 2. **Data Preparation**: Open Neo4j with your created Road Network Graph Database running. 
 
 ## Usage Guide 
-**Executing the Script**:
    - Open the terminal in the project directory.
-   - Run `main.py` with the necessary arguments (: 
+   - Run `main.py` with the necessary arguments (see example below): uri username password graph_name 
       ```
       python main.py bolt://localhost:7690 neo4j password1 graph1
       ```
-
-**Changing some arguments in function**:
-
-
+      
 ## Expected Outputs
+The above usage guide allows you to run all algorithms with 3 specified edges (takes the least amount of time). You can change other variables of algorithms in line 39 and 40 in `algorithm.py`. If you want to run the algorithm with another graph database, you need to open the graph database on neo4j and conduct usage guide again.
