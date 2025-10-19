@@ -14,7 +14,7 @@ import concurrent.futures
 """
 Input:
 driver - Neo4j driver 
-num_edges - number of specified edges in list
+num_edges (optional) - number of specified edges in list
 max_it=1000 (optional) - number of iterations for Monte Carlo Method 
 population_size=20 (optional) - population size for genetic algorithm
 generations=100 (optional) - number of generations for genetic algorithm 
@@ -36,7 +36,7 @@ time_list - list of computational time taken to run the algorithm
 
 class dissertation:
     
-    def __init__(self, driver, num_edges, max_it=1000, population_size=20, generations=100, crossover_rate=0.6, 
+    def __init__(self, driver, num_edges=[3], max_it=1000, population_size=20, generations=100, crossover_rate=0.6, 
                  mutation1_rate=0.1, mutation2_rate=0.1, timeout=120, trials=3, alpha1=1, alpha2=1):
         
         # Define variables
@@ -210,7 +210,7 @@ class dissertation:
         WITH path, REDUCE(totalWeight = 0, r IN relationships(path) | totalWeight + toFloat(r.totalCost)) AS pathWeight
         ORDER BY pathWeight ASC
         LIMIT 1
-        RETURN [nodeId IN nodeIds | gds.util.asNode(nodeId).id] AS nodeList, pathWeight
+        RETURN [node IN nodes(path) | node.nodeIds] AS nodeList, pathWeight
         """
         with self.driver.session() as session:
             result = session.run(query)
