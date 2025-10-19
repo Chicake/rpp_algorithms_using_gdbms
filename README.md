@@ -25,7 +25,7 @@ When creating your own road network graph database, the labelling and property n
   - id: ID of the node
   - latitude
   - longitude
-<img width="1344" height="430" alt="Picture 1 (1)" src="https://github.com/user-attachments/assets/8ae51abf-71aa-48de-ad95-974879a6b2a4" />
+<img width="1413" height="401" alt="example graph database" src="https://github.com/user-attachments/assets/fc735880-1fbc-4882-9226-4340cb37269b" />
 
 ## Setup Instructions
 1. **Python Environment**: Ensure Python is installed. Required libraries include pandas, numpy, matplotlib, and neo4j. Install them using:
