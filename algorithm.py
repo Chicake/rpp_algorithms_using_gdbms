@@ -213,8 +213,9 @@ class dissertation:
         RETURN [node IN nodes(path) | node.nodeIds] AS nodeList, pathWeight
         """
         with self.driver.session() as session:
-            result = session.run(query)
-            path = result.single()
+            with session.begin_transaction(timeout=self.timeout) as tx:
+                result = tx.run(query)
+                path = result.single()
         
         end_time = time.time()  # End timer
 
@@ -600,15 +601,13 @@ class dissertation:
             score_list = []
             for chromosome in solution_pool:
                 fitness_score, total_distance, shortest_path_nodes = self.score_chromosome(chromosome, possible_edges, start_node_id)
-                if i + 1 == self.generations:  # If it is last generation, store best scoring chromosome and its information
-                    if fitness_score > best_chromosome_score:
-                        best_chromosome = chromosome
-                        best_chromosome_score = fitness_score
-                        best_path = shortest_path_nodes
-                        best_distance = total_distance
-                else:  # Else, save its fitness score
-                    score_list.append(fitness_score)
-                    fitness_sum += fitness_score
+                if fitness_score > best_chromosome_score:
+                    best_chromosome = chromosome
+                    best_chromosome_score = fitness_score
+                    best_path = shortest_path_nodes
+                    best_distance = total_distance
+                score_list.append(fitness_score)
+                fitness_sum += fitness_score
 
             # If it is not the last generation, randomly select from current solution pool based on fitness score
             if i + 1 != self.generations:
