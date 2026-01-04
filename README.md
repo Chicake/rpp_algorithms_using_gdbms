@@ -14,18 +14,9 @@ This repository aims to provide the full coding implementation of the RPP Algori
 2. **main.py**: This file is where all functions in `algorithm.py` is used to enable algorithms to run from terminal. 
 
 3. **requirements.txt**: This file contains all library used in main.py, so you can pip install.
-
-## Road Network Graph Database (You need to create this)
-When creating your own road network graph database, the labelling and property name should exactly be the same, or otherwise the Cypher query will fail. You can see the paper Specifically, name nodes and edges as below (see the image too for an example), with sub bullet points representing their properties:
-- Edge name (road): DRIVE_TO
-  - id: ID of the edge
-  - direction: label "B" for both ways, "O" for one way
-  - distance: in nautical miles
-- Node name (junctions): Junction
-  - id: ID of the node
-  - latitude
-  - longitude
-<img width="1413" height="401" alt="example graph database" src="https://github.com/user-attachments/assets/fc735880-1fbc-4882-9226-4340cb37269b" />
+  
+4. **GraphDatabaseGuide.md**: This file explains how to make the road network graph database using your own road data
+Note: Data used in the paper cannot be published as the data belongs to HERE Technologies and is protected by Intellectual Property Rights.
 
 ## Setup Instructions
 1. **Python Environment**: Ensure Python is installed. Required libraries include pandas, numpy, matplotlib, and neo4j. Install them using:
@@ -33,7 +24,7 @@ When creating your own road network graph database, the labelling and property n
    pip install -r requirements.txt
    ```
 
-2. **Data Preparation**: Open Neo4j with your created Road Network Graph Database running. 
+2. **Data Preparation**: Open Neo4j with your created Road Network Graph Database running. You can create your own Road Network Graph Database by referring to `GraphDatabaseGuide.md`.
 
 ## Usage Guide 
    - Open the terminal in the project directory.
