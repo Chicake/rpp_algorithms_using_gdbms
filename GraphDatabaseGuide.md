@@ -1,46 +1,74 @@
-# Codes: Optimizing Map Feature Collection Routing Using Graph Database Technology
+# Guide: How to create Road Network Graph Database
 
 ## Overview
 
-Note: This is the coding implementation for the study "Optimizing Map Feature Collection Routing Using Graph Database Technology" by Kaede Hasegawa and Antonis Bikakis.
+This README file aims to explain how to create Road Network Graph Database using your own road data.
 
-Accurate digital maps are essential for meeting transportation and logistics demands efficiently, necessitating frequent updates to road features. This raises the challenge of determining an optimal path that visits all roads requiring data collection, known as the Rural Postman Problem (RPP). Traditionally, this problem has been addressed using heuristics and metaheuristics with relational databases. However, graph databases, which can better represent and store relationships in network structure, may offer advantages in solving RPP. Therefore, this study investigates the novel application of graph databases and their query language for developing optimisation algorithms to solve the RPP. Three existing algorithms—(a) Nearest Neighbour, (b) Monte Carlo, and (c) Genetic Algorithm—were implemented using Cypher queries (e.g., A* shortest path algorithm) and compared with (d) a Cypher-only algorithm designed to compute the optimal path.
+## Pre-requisites: Preparing CSV files
+Make sure the CSV file name and column names are exactly as below:
+- **road.csv**: This CSV file has road/edge information, with columns listed below as mandatory. If the road is bi-directional, it should have 2 rows with swapped REF_IN_ID and NREF_IN_ID.
+    - id: ID of the road
+    - junction_in: Start node of the road
+    - junction_out: End node of the road
+    - direction: Direction of the road
+    - distance: Distance of the road in meters
+- **junction.csv**: This CSV file has junction/node information, with columns listed below as mandatory. One row per node. 
+  - id: ID of the junction
+  - longitude: longitude of the junction
+  - latitude: latitude of the junction
 
-This repository aims to provide the full coding implementation of the RPP Algorithms. The dataset used in the study is provided by HERE Technologies, which is protected by intellectual property right, so the dataset cannot be provided. This can run if you have your own road network graph database on Neo4j; this repository is more for explanation purposes rather than testing. 
+## Loading CSV files into Neo4j
+1. Create new project and new database in Neo4j
+2. Click the "Open folder" -> "Import" dropdown menu (often represented by three dots or a folder icon next to the "Start" button)
+3. Place the `junction.csv` and `road.csv` in this folder
+4. Activate the database and open the terminal
+5. In the terminal, run the following code to load junctions
+   ```
+   LOAD CSV WITH HEADERS from 'file:///junction.csv' AS junction
+   CREATE (:Junction {id:junction.id, longitude:toFloat(junction.longitude), latitude:toFloat(junction.latitude)})
+   ```
+6. In the terminal, run the following code to load roads
+   ```
+   LOAD CSV WITH HEADERS from 'file:///road.csv' AS road
+   MATCH (j1:Junction {id:road.junction_in}), (j2:Junction {id:road.junction_out})
+   MERGE (j1)-[r:DRIVE_TO]->(j2)
+   SET r.id = road.id, r.distance = toFloat(road.distance), r.direction = road.direction
+   ```
 
-## Files Description
-1. **algorithm.py**: This file includes all RPP algorithm functions. It also has functions to store and plot performance data.
+# Processing loaded data in Neo4j
+In the terminal, run the following code in sequence to remove small disconnected graph:
+1. ```
+   CALL gds.graph.project(
+   'myGraph', // The name of the graph in GDS
+   'Junction', // The label of the nodes we want to include in the graph
+   'DRIVE_TO' // The type of relationships we want to include in the graph
+   );
+   ```
+2. ```
+   CALL gds.wcc.stream('myGraph')
+   YIELD nodeId, componentId
+   RETURN componentId, count(*) as size
+   ORDER BY size DESC
+   LIMIT 1;
+   ```
+3. ```
+   WITH 0 AS largestComponentId
+   CALL gds.wcc.stream('myGraph')
+   YIELD nodeId, componentId
+   WITH nodeId
+   WHERE componentId = largestComponentId
+   MATCH (n) WHERE id(n) = nodeId
+   SET n.mainComponent = true;
+   ```
+4. ```
+   MATCH (n)
+   WHERE n.mainComponent IS NULL
+   DETACH DELETE n;
+   ```
+5. ```
+   MATCH (n)
+   REMOVE n.mainComponent;
+   ```
 
-2. **main.py**: This file is where all functions in `algorithm.py` is used to enable algorithms to run from terminal. 
-
-3. **requirements.txt**: This file contains all library used in main.py, so you can pip install.
-
-## Road Network Graph Database (You need to create this)
-When creating your own road network graph database, the labelling and property name should exactly be the same, or otherwise the Cypher query will fail. You can see the paper Specifically, name nodes and edges as below (see the image too for an example), with sub bullet points representing their properties:
-- Edge name (road): DRIVE_TO
-  - id: ID of the edge
-  - direction: label "B" for both ways, "O" for one way
-  - distance: in nautical miles
-- Node name (junctions): Junction
-  - id: ID of the node
-  - latitude
-  - longitude
+## How would the created Graph Database will look like
 <img width="1413" height="401" alt="example graph database" src="https://github.com/user-attachments/assets/fc735880-1fbc-4882-9226-4340cb37269b" />
-
-## Setup Instructions
-1. **Python Environment**: Ensure Python is installed. Required libraries include pandas, numpy, matplotlib, and neo4j. Install them using:
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. **Data Preparation**: Open Neo4j with your created Road Network Graph Database running. 
-
-## Usage Guide 
-   - Open the terminal in the project directory.
-   - Run `main.py` with the necessary arguments (see example below): uri username password graph_name 
-      ```
-      python main.py bolt://localhost:7690 neo4j password1 graph1
-      ```
-      
-## Expected Outputs
-The above usage guide allows you to run all algorithms with 3 specified edges (takes the least amount of time). You can change other variables of algorithms in line 39 and 40 in `algorithm.py`. If you want to run the algorithm with another graph database, you need to open the graph database on neo4j and conduct usage guide again.
