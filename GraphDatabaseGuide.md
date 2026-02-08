@@ -45,7 +45,7 @@ In the terminal, run the following code in sequence to remove small disconnected
    );
    ```
 2. ```
-   CALL gds.wcc.stream('myGraph')
+   CALL gds.scc.stream('myGraph')
    YIELD nodeId, componentId
    RETURN componentId, count(*) as size
    ORDER BY size DESC
@@ -53,7 +53,7 @@ In the terminal, run the following code in sequence to remove small disconnected
    ```
 3. ```
    WITH 0 AS largestComponentId
-   CALL gds.wcc.stream('myGraph')
+   CALL gds.scc.stream('myGraph')
    YIELD nodeId, componentId
    WITH nodeId
    WHERE componentId = largestComponentId
