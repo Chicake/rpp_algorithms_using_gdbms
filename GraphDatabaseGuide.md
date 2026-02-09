@@ -25,6 +25,11 @@ https://cran.rstudio.com/web/packages/trafficCAR/vignettes/creating-custom-road-
 `osmdata` is from OpenStreetMap, which is an open data licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMapFoundation (OSMF). Regarding licensing, please refer to the link below:
 https://www.openstreetmap.org/copyright
 
+`Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017).
+"osmdata." _Journal of Open Source Software_, *2*(14), 305.
+doi:10.21105/joss.00305 <https://doi.org/10.21105/joss.00305>,
+<https://joss.theoj.org/papers/10.21105/joss.00305>.`
+
 ## Loading CSV files into Neo4j
 1. Create new project and new database in Neo4j
 2. Click the "Open folder" -> "Import" dropdown menu (often represented by three dots or a folder icon next to the "Start" button)
