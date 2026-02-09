@@ -19,11 +19,15 @@ Make sure the CSV file name and column names are exactly as below:
 You can also use sample dataset for quick run in the Sample Dataset folder.
 
 ## Sample Dataset
-This sample dataset is originally from `osmdata` library in r, which was processed accordingly by referencing below:
+This sample dataset is originally from `osmdata` library in r:
+https://github.com/ropensci/osmdata
+
+This datase was processed accordingly by referencing below:
 https://cran.rstudio.com/web/packages/trafficCAR/vignettes/creating-custom-road-datasets.html
 
-`osmdata` is from OpenStreetMap, which is an open data licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMapFoundation (OSMF). Regarding licensing, please refer to the link below:
+`osmdata` is from OpenStreetMap, which is an open data licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMapFoundation (OSMF). Regarding licensing, please refer to the links below:
 https://www.openstreetmap.org/copyright
+https://osmfoundation.org/wiki/Licence
 
 `Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017).
 "osmdata." _Journal of Open Source Software_, *2*(14), 305.
