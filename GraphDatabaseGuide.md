@@ -16,7 +16,7 @@ Make sure the CSV file name and column names are exactly as below:
   - id: ID of the junction
   - longitude: longitude of the junction
   - latitude: latitude of the junction
-You can also use sample dataset for quick run in the Sample Dataset folder (there is Neo4j dump and 2 csv files described above).
+You can also use sample dataset for quick run in the Sample Dataset folder.
 
 ## Sample Dataset
 This sample dataset is originally from `osmdata` library in r, which was processed accordingly by referencing below:
