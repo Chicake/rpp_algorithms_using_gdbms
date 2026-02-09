@@ -16,6 +16,14 @@ Make sure the CSV file name and column names are exactly as below:
   - id: ID of the junction
   - longitude: longitude of the junction
   - latitude: latitude of the junction
+You can also use sample dataset for quick run in the Sample Dataset folder (there is Neo4j dump and 2 csv files described above).
+
+## Sample Dataset
+This sample dataset is originally from `osmdata` library in r, which was processed accordingly by referencing below:
+https://cran.rstudio.com/web/packages/trafficCAR/vignettes/creating-custom-road-datasets.html
+
+`osmdata` is from OpenStreetMap, which is an open data licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMapFoundation (OSMF). Regarding licensing, please refer to the link below:
+https://www.openstreetmap.org/copyright
 
 ## Loading CSV files into Neo4j
 1. Create new project and new database in Neo4j
