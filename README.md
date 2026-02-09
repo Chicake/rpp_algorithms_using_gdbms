@@ -26,7 +26,7 @@ Note: Data used in the paper cannot be published as the data belongs to HERE Tec
 
 2. **Data Preparation**: Open Neo4j with your created Road Network Graph Database running. You can create your own Road Network Graph Database by referring to `GraphDatabaseGuide.md`.
 
-(The sample dataset is from OpenStreetMap, which is an open data licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMapFoundation (OSMF). Regarding licensing, please refer to the link: https://www.openstreetmap.org/copyright)
+(The sample dataset is from OpenStreetMap, which is an open data licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMapFoundation (OSMF). Regarding licensing, please refer to the following links: https://osmfoundation.org/wiki/Licence, https://www.openstreetmap.org/copyright)
 
 ## Usage Guide 
    - Open the terminal in the project directory.
