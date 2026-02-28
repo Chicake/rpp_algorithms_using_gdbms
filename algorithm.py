@@ -210,7 +210,7 @@ class dissertation:
         WITH path, REDUCE(totalWeight = 0, r IN relationships(path) | totalWeight + toFloat(r.totalCost)) AS pathWeight
         ORDER BY pathWeight ASC
         LIMIT 1
-        RETURN [node IN nodes(path) | node.nodeIds] AS nodeList, pathWeight
+        RETURN [node IN nodes(path) | node.id] AS nodeList, pathWeight
         """
         with self.driver.session() as session:
             with session.begin_transaction(timeout=self.timeout) as tx:
